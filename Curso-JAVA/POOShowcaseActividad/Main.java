@@ -21,9 +21,8 @@ public class Main {
             + "mediante su nombre, grupo y calificaciones. "
             + "Esto permite organizar mejor la información.",
             new String[]{"POO", "Abstracción"},
-            ""
+            "https://github.com/carolinabastida/Programacion-2-2026/blob/actividad-pooshowcase/Curso-JAVA/POOShowcaseActividad/Ejemplos/Abstraccion/Main.java"
         ),
-
         new Concepto(
             2,
             "Encapsulamiento",
@@ -34,9 +33,8 @@ public class Main {
             + "bancaria puede tener un saldo privado y un "
             + "método que controle los retiros de dinero.",
             new String[]{"POO", "Encapsulamiento"},
-            ""
+            "https://github.com/carolinabastida/Programacion-2-2026/blob/actividad-pooshowcase/Curso-JAVA/POOShowcaseActividad/Ejemplos/Encapsulamiento/Main.java"
         ),
-
         new Concepto(
             3,
             "Herencia",
@@ -47,9 +45,8 @@ public class Main {
             + "heredar de una clase Persona. En Java "
             + "utilizamos la palabra extends.",
             new String[]{"POO", "Herencia"},
-            ""
+            "https://github.com/carolinabastida/Programacion-2-2026/blob/actividad-pooshowcase/Curso-JAVA/POOShowcaseActividad/Ejemplos/Herencia/Main.java"
         ),
-
         new Concepto(
             4,
             "Polimorfismo",
@@ -60,7 +57,7 @@ public class Main {
             + "un método hacerSonido, pero cada una "
             + "produce un resultado diferente.",
             new String[]{"POO", "Polimorfismo"},
-            ""
+            "https://github.com/carolinabastida/Programacion-2-2026/blob/actividad-pooshowcase/Curso-JAVA/POOShowcaseActividad/Ejemplos/Polimorfismo/Main.java"
         )
     };
 
@@ -70,7 +67,6 @@ public class Main {
 
     // Preparamos la ventana principal.
     private static void crearVentana() {
-
         JFrame ventana = new JFrame("POOShowcase");
         ventana.setSize(700, 450);
         ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -80,7 +76,6 @@ public class Main {
         panelSuperior.add(new JLabel("Elegí un concepto:"));
 
         JComboBox<String> lista = new JComboBox<>();
-
         for (Concepto c : conceptos) {
             lista.addItem(c.getConcepto());
         }
@@ -93,59 +88,39 @@ public class Main {
         descripcion.setLineWrap(true);
         descripcion.setWrapStyleWord(true);
         descripcion.setMargin(new java.awt.Insets(20, 20, 20, 20));
+        ventana.add(new JScrollPane(descripcion), BorderLayout.CENTER);
 
-        ventana.add(
-            new JScrollPane(descripcion),
-            BorderLayout.CENTER
-        );
-
-        JButton botonEjemplo = new JButton("Ver ejemplo en Replit");
-
+        JButton botonEjemplo = new JButton("Ver código del ejemplo en GitHub");
         JPanel panelInferior = new JPanel();
         panelInferior.add(botonEjemplo);
-
         ventana.add(panelInferior, BorderLayout.SOUTH);
 
         // Mostramos la explicación del tema elegido.
         lista.addActionListener(e -> {
             int posicion = lista.getSelectedIndex();
             Concepto elegido = conceptos[posicion];
-
-            descripcion.setText(
-                elegido.getConcepto() + "\n\n"
-                + elegido.getDescripcion()
-            );
+            descripcion.setText(elegido.getConcepto() + "\n\n" + elegido.getDescripcion());
         });
 
-        // Abrimos el ejemplo cuando tenga un enlace.
+        // Abrimos el código del ejemplo elegido.
         botonEjemplo.addActionListener(e -> {
             int posicion = lista.getSelectedIndex();
             Concepto elegido = conceptos[posicion];
             String enlace = elegido.getEnlaceReplit();
 
             if (enlace == null || enlace.isEmpty()) {
-                JOptionPane.showMessageDialog(
-                    ventana,
-                    "Todavía falta agregar el ejemplo de Replit."
-                );
+                JOptionPane.showMessageDialog(ventana, "Todavía falta agregar el enlace del ejemplo.");
                 return;
             }
 
             try {
                 Desktop.getDesktop().browse(new URI(enlace));
             } catch (Exception error) {
-                JOptionPane.showMessageDialog(
-                    ventana,
-                    "No se pudo abrir el enlace."
-                );
+                JOptionPane.showMessageDialog(ventana, "No se pudo abrir el enlace.");
             }
         });
 
-        descripcion.setText(
-            conceptos[0].getConcepto() + "\n\n"
-            + conceptos[0].getDescripcion()
-        );
-
+        descripcion.setText(conceptos[0].getConcepto() + "\n\n" + conceptos[0].getDescripcion());
         ventana.setVisible(true);
     }
 }
